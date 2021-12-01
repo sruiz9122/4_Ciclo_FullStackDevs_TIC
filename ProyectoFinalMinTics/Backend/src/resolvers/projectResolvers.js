@@ -25,4 +25,5 @@ const resolvers = {
     }
 };
 
+//expor module
 module.exports = resolvers;
