@@ -27,5 +27,5 @@ const proyectoShema = new Schema({
     timestamps: true
 });
 
-//Mongo crea por debajo una coleccion lalmada usuarios
+//Mongo crea por debajo una coleccion llamada usuarios
 module.exports = model('Proyecto',proyectoShema);

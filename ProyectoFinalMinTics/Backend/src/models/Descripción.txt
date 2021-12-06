@@ -1,0 +1,28 @@
+En la carpeta de Models se encuentra la estructura de las colecciones que se necesitan para el desarrollo del sprint
+
+La estructura de la coleccion de Usuarios (los campos que se requieren para poder realizar un nuevo "usuario") es: 
+    numeroDocumento,
+    nombre,
+    correo,
+    contraseña,
+    tipo de usuario,
+    estado
+
+
+La estructura de la coleccion de Proyectos es: 
+    nombreProyecto,
+    objetivoGeneral,
+    objetivosEspecificos,
+    presupuesto,
+    fechaInicio,
+    fechaFin,
+    inscritos:
+        id, 
+        rol, 
+    estado,
+    fase,
+    avance:
+        especificacion,
+        observación,
+        fecha,
+        idUsuario,

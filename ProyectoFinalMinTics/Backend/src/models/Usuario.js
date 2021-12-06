@@ -32,5 +32,5 @@ const userShema = new Schema({
 });
 
 
-//Mongo crea por debajo una coleccion lalmada usuarios
+//Mongo crea por debajo una coleccion llamada usuarios
 module.exports = model('Usuario',userShema);
