@@ -11,7 +11,21 @@ const resolvers = {
         async projectById( _, { _id } )  
         {
             return await Proyecto.findById(_id);
+        },
+        async projectByIdUser( _, { _id } )  
+        {
+            let projects = await Proyecto.find();
+            let returnProject = [];
+            projects.forEach(project => {
+                project.inscritos.forEach(inscrito =>{
+                    if(inscrito.id === _id )
+                         returnProject.push(project);
+                })
+            });
+            return returnProject;
         }
+
+        
     },
     Mutation: {
         async createProject(_, { input } ){
@@ -25,5 +39,4 @@ const resolvers = {
     }
 };
 
-//expor module
 module.exports = resolvers;

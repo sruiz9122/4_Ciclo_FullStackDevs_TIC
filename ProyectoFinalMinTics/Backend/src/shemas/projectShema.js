@@ -10,6 +10,7 @@ const typeDefs = `
         hello: String
         Projects: [Project]
         projectById(_id: ID): Project
+        projectByIdUser(_id: ID): [Project]
     }
 
     type Mutation {
@@ -46,6 +47,7 @@ const typeDefs = `
     input InscritosIn{
         id: ID
         rol: String!
+        estado: Boolean
    }
 
    input avanceIn{
@@ -77,6 +79,7 @@ const typeDefs = `
     type Inscritos{
         id: ID
         rol: String!
+        estado: Boolean
    }
 
    type avance{

@@ -15,6 +15,10 @@ const User = require("../models/Usuario");
         async login(_, { correo, contrasena })
         {
             return await User.findOne({ 'correo': correo , "contrasena": contrasena , "estado": true });
+        },
+        async userBytype( _, { tipoUsuario } )  
+        {
+            return await User.find({'tipoUsuario': tipoUsuario});
         }
     },
     Mutation: {

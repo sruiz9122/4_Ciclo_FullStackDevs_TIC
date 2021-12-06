@@ -8,6 +8,7 @@ const typeDefs = `
         Users: [User]
         userById(_id: ID): User
         login(correo: String, contrasena: String): User
+        userBytype(tipoUsuario: String): [User]
     }
 
     type Mutation {

@@ -11,9 +11,10 @@ const proyectoShema = new Schema({
     fechaFin: { type: Date },
     inscritos:  [{ 
                     id: { type: String, required: true },
-                    rol: { type: String, required: true }
+                    rol: { type: String, required: true },
+                    estado: { type: Boolean, default: false, required: true }
                 }],
-    estado: { type: Boolean, required: true, default: true },
+    estado: { type: Boolean, required: true, default: false },
     fase: { type: String, default: "Analisis" },  //Analisis, Inicio, Desarrollo, terminado 
     Avance:  [{ 
                     especificacion: { type: String },
