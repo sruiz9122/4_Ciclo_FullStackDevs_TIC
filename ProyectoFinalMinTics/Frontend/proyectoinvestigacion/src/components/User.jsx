@@ -10,10 +10,26 @@ export const User = () => {
     const [tipoUsuario, setTipoUsuario] = React.useState('')
     const [estado, setEstado] = React.useState('')
     const [listaUsuario, setListaUsuarios] = React.useState([])
+    //Estados de modificación
+    const [editar, setEditar] = React.useState(false)
+    const [id, setId] = React.useState('')
+    const [listaModificacion, setlistaModificacion] = React.useState([])
 
     const handleUsuario = (e) => {
         console.log(e.target.value);
         setUsuario(e.target.value)
+    }
+
+    const handleModificar = (mod) => {
+        console.log(mod)
+        setUsuario(mod.usuario)
+        setCorreo(mod.correo)
+        setCedula(mod.cedula)
+        setContrasena(mod.contrasena)
+        setTipoUsuario(mod.tipoUsuario)
+        setEstado(mod.estado)
+        setEditar(true)
+        setId(mod.id)
     }
 
     const guardarDatos = function (e) {
@@ -24,34 +40,25 @@ export const User = () => {
 
         //Validación
         if (!usuario.trim()) {
-            console.log(`Campo usuario vacío`)
+            alert(`Campo usuario vacío`)
             return
         }
 
         if (!correo.trim()) {
-            console.log(`Campo correo vacío`)
+            alert(`Campo correo vacío`)
             return
         }
 
         if (!cedula.trim()) {
-            console.log(`Campo cedula vacío`)
+            alert(`Campo cedula vacío`)
             return
         }
 
         if (!contrasena.trim()) {
-            console.log(`Campo contraseña vacío`)
+            alert(`Campo contraseña vacío`)
             return
         }
 
-        if (!tipoUsuario.trim()) {
-            console.log(`Campo Tipo Usuario vacío`)
-            return
-        }
-
-        if (!estado.trim()) {
-            console.log(`Campo Estado vacío`)
-            return
-        }
 
         //LLamado base de datos
         console.log(`Se guardaron los datos`)
@@ -70,6 +77,18 @@ export const User = () => {
             }
         ])
 
+        setlistaModificacion([
+            ...listaModificacion,
+            {
+                usuario,
+                correo,
+                cedula,
+                contrasena,
+                tipoUsuario,
+                estado
+            }
+        ])
+
         //Limpieza del estado
         setUsuario('')
         setCorreo('')
@@ -85,7 +104,7 @@ export const User = () => {
         <div>
             <h2>Agregar Usuario</h2>
             <hr />
-            {usuario}
+            {/* {usuario} */}
             <form onSubmit={guardarDatos}>
 
                 <input type="text"
@@ -95,7 +114,7 @@ export const User = () => {
                     onChange={handleUsuario}
                 />
 
-                <input type="text"
+                <input type="email"
                     placeholder="Ingrese Correo"
                     className="form-control mb-2"
                     name="Correo"
@@ -117,21 +136,126 @@ export const User = () => {
                     onChange={(e) => setContrasena(e.target.value)}
                 />
 
-                <input type="text"
-                    placeholder="Ingrese Tipo Usuario"
-                    className="form-control mb-2"
-                    name="tipousuario"
-                    onChange={(e) => setTipoUsuario(e.target.value)}
-                />
+                <div className='mb-3'>
+                    {/* <label className='form-label'>Estado</label> */}
+                    <select
+                        id='inputEstadoUsuario'
+                        className='form-select'
+                        required
+                        onChange={(e) => setTipoUsuario(e.target.value)}
+                    >
+                        {tipoUsuario === '' ? (
+                            <>
+                                <option
+                                    diabled
+                                    value=''
+                                    selected
+                                    className='text-muted'
+                                >
+                                    Seleccione un tipo de Usuario
+                                </option>
+                                <option value='Administrador'>Administrador</option>
+                                <option value='Estudiante'>Estudiante</option>
+                                <option value='Lider'>Líder</option>
+                            </>
+                        ) : tipoUsuario === 'Administrador' ? (
+                            <>
+                                <option diabled value='' /* class='text-muted' */>
+                                    Seleccione un tipo de Usuario
+                                </option>
+                                <option value='Administrador' selected>
+                                    Administrador
+                                </option>
+                                <option value='Estudiante'>Estudiante</option>
+                                <option value='Lider'>Líder</option>
+                            </>
+                        ) : tipoUsuario === 'Estudiante' ? (
+                            <>
+                                <option diabled value='' /* class='text-muted' */>
+                                    Seleccione un tipo de Usuario
+                                </option>
+                                <option value='Administrador'>Administrador</option>
+                                <option value='Estudiante' selected>
+                                    Estudiante
+                                </option>
+                                <option value='Lider'>Líder</option>
+                            </>
+                        ) : (
+                            <>
+                                <option diabled value='' /* class='text-muted' */>
+                                    Seleccione un tipo de Usuario
+                                </option>
+                                <option value='Administrador'>Administrador</option>
+                                <option value='Estudiante'>Estudiante</option>
+                                <option value='Lider' selected>
+                                    Líder
+                                </option>
+                            </>
+                        )};
+                    </select>
+                </div>
 
-                <input type="text"
-                    placeholder="Ingrese Estado"
-                    className="form-control mb-2"
-                    name="estado"
-                    onChange={(e) => setEstado(e.target.value)}
-                />
+                <div className='mb-3'>
+                    {/* <label className='form-label'>Estado</label> */}
+                    <select
+                        id='inputEstadoUsuario'
+                        className='form-select'
+                        required
+                        onChange={(e) => setEstado(e.target.value)}
+                    >
+                        {estado === '' ? (
+                            <>
+                                <option
+                                    diabled
+                                    value=''
+                                    selected
+                                    className='text-muted'
+                                >
+                                    Seleccione un estado
+                                </option>
+                                <option value='Pendiente'>Pendiente</option>
+                                <option value='Autorizado'>Autorizado</option>
+                                <option value='No autorizado'>No autorizado</option>
+                            </>
+                        ) : estado === 'Pendiente' ? (
+                            <>
+                                <option diabled value='' /* class='text-muted' */>
+                                    Seleccione un estado
+                                </option>
+                                <option value='Pendiente' selected>
+                                    Pendiente
+                                </option>
+                                <option value='Autorizado'>Autorizado</option>
+                                <option value='No autorizado'>No autorizado</option>
+                            </>
+                        ) : estado === 'Autorizado' ? (
+                            <>
+                                <option diabled value='' /* class='text-muted' */>
+                                    Seleccione un estado
+                                </option>
+                                <option value='Pendiente'>Pendiente</option>
+                                <option value='Autorizado' selected>
+                                    Autorizado
+                                </option>
+                                <option value='No autorizado'>No autorizado</option>
+                            </>
+                        ) : (
+                            <>
+                                <option diabled value='' /* class='text-muted' */>
+                                    Seleccione un estado
+                                </option>
+                                <option value='Pendiente'>Pendiente</option>
+                                <option value='Autorizado'>Autorizado</option>
+                                <option value='No autorizado' selected>
+                                    No autorizado
+                                </option>
+                            </>
+                        )};
+                    </select>
+                </div>
 
-                <button className="btn btn-outline-success">Agregar Usuario</button>
+
+                <button className="btn btn-outline-success">Almacenar cambios</button>
 
             </form>
 
@@ -144,7 +268,7 @@ export const User = () => {
                         <th scope='col'>Id</th>
                         <th scope='col'>Nombre</th>
                         <th scope='col'>Correo</th>
-                        <th scope='col'>cedula</th>
+                        <th scope='col'>Cedula</th>
                         <th scope='col'>Tipo de Usuario</th>
                         <th scope='col'>Estado</th>
                         <th scope='col'>Editar</th>
@@ -165,15 +289,11 @@ export const User = () => {
                                 <td>{item.tipoUsuario}</td>
                                 <td>{item.estado}</td>
                                 <td>
-                                    {/* <Link
-                            className='btn btn-outline-primary btn-sm'
-                            to={`/productos/${producto.id}`}
-                          > */}
                                     <button
-                                        className='btn btn-outline-primary btn-sm'
+                                        className="btn btn-outline-primary btn-sm"
+                                        onClick={() => handleModificar(item)}
                                     >
                                         Editar
-
                                     </button>
                                 </td>
                             </tr>
