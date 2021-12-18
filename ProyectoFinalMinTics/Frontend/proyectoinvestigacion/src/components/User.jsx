@@ -1,5 +1,7 @@
 import React from 'react'
 import '../App.css'
+import { v4 as uuidv4 } from 'uuid';
+
 
 export const User = () => {
 
@@ -13,53 +15,13 @@ export const User = () => {
     //Estados de modificación
     const [editar, setEditar] = React.useState(false)
     const [id, setId] = React.useState('')
-    const [listaModificacion, setlistaModificacion] = React.useState([])
-
-    const handleUsuario = (e) => {
-        console.log(e.target.value);
-        setUsuario(e.target.value)
-    }
-
-    const handleModificar = (mod) => {
-        console.log(mod)
-        setUsuario(mod.usuario)
-        setCorreo(mod.correo)
-        setCedula(mod.cedula)
-        setContrasena(mod.contrasena)
-        setTipoUsuario(mod.tipoUsuario)
-        setEstado(mod.estado)
-        setEditar(true)
-        setId(mod.id)
-    }
+    const [listaModificacion, setListaModificacion] = React.useState([])
 
     const guardarDatos = function (e) {
         //Evito el comportamiento por defecto del navegador
         //Que no envíe el formulario y que no refresque el navegador
         e.preventDefault()
         console.log(e.target)
-
-        //Validación
-        if (!usuario.trim()) {
-            alert(`Campo usuario vacío`)
-            return
-        }
-
-        if (!correo.trim()) {
-            alert(`Campo correo vacío`)
-            return
-        }
-
-        if (!cedula.trim()) {
-            alert(`Campo cedula vacío`)
-            return
-        }
-
-        if (!contrasena.trim()) {
-            alert(`Campo contraseña vacío`)
-            return
-        }
-
-
         //LLamado base de datos
         console.log(`Se guardaron los datos`)
 
@@ -68,6 +30,7 @@ export const User = () => {
             ...listaUsuario,
             //Asignación de un nuevo elemeto
             {
+                id: uuidv4(),
                 usuario: usuario,
                 correo: correo,
                 cedula: cedula,
@@ -77,17 +40,6 @@ export const User = () => {
             }
         ])
 
-        setlistaModificacion([
-            ...listaModificacion,
-            {
-                usuario,
-                correo,
-                cedula,
-                contrasena,
-                tipoUsuario,
-                estado
-            }
-        ])
 
         //Limpieza del estado
         setUsuario('')
@@ -100,39 +52,103 @@ export const User = () => {
         e.target.reset()
     }
 
+    const handleEditar = (edit) => {
+        console.log(edit)
+        setUsuario(edit.usuario)
+        setCorreo(edit.correo)
+        setCedula(edit.cedula)
+        setContrasena(edit.contrasena)
+        setTipoUsuario(edit.tipoUsuario)
+        setEstado(edit.estado)
+        setEditar(true)
+        setId(edit.id)
+    }
+
+    const editarDatos = function (e) {
+        //Evito el comportamiento por defecto del navegador
+        //Que no envíe el formulario y que no refresque el navegador
+        e.preventDefault()
+        console.log(e.target)
+        //LLamado base de datos
+        console.log(`Se modificaron los datos`)
+
+        const arregloTemporal = listaModificacion.map((item) => {
+            return item.id  === id ? { id:id, usuario:usuario, correo:correo, cedula:cedula, contrasena:contrasena, tipoUsuario:tipoUsuario, estado:estado} : item
+        })
+
+        setListaModificacion([
+            //Accedemos al valor actual del estado
+            ...listaModificacion,
+            //Asignación de un nuevo elemeto
+            {
+                id: uuidv4(),
+                usuario: usuario,
+                correo: correo,
+                cedula: cedula,
+                contrasena: contrasena,
+                tipoUsuario: tipoUsuario,
+                estado: estado
+            }
+        ])
+
+
+        //Limpieza del estado
+        setUsuario('')
+        setCorreo('')
+        setCedula('')
+        setContrasena('')
+        setTipoUsuario('')
+        setEstado('')
+        //Limpiar los campos del formulario
+        e.target.reset()
+    }
+
+    
+
+
     return (
         <div>
-            <h2>Agregar Usuario</h2>
+            {
+                editar ? 
+                (<h2>Editar Usuario</h2>) 
+                :
+                (<h2>Agregar Usuario</h2>)
+            }
+            
             <hr />
             {/* {usuario} */}
-            <form onSubmit={guardarDatos}>
+            <form onSubmit={editar ? editarDatos : guardarDatos}>
 
                 <input type="text"
                     placeholder="Ingrese Nombre"
+                    required
                     className="form-control mb-2"
-                    name="Nombre"
-                    onChange={handleUsuario}
+                    id="Usuario"
+                    onChange={(e) => setUsuario(e.target.value)}
                 />
 
                 <input type="email"
                     placeholder="Ingrese Correo"
+                    required
                     className="form-control mb-2"
-                    name="Correo"
+                    id="Correo"
                     // Asiganos el evento de cambio al input y accedemos al valor del input mediante su target.value
                     onChange={(e) => setCorreo(e.target.value)}
                 />
 
                 <input type="number"
                     placeholder="Ingrese Cedula"
+                    required
                     className="form-control mb-2"
-                    name="Cedula"
+                    id="Cedula"
                     onChange={(e) => setCedula(e.target.value)}
                 />
 
                 <input type="password"
                     placeholder="Ingrese Contraseña"
+                    required
                     className="form-control mb-2"
-                    name="Contrasena"
+                    id="Contrasena"
                     onChange={(e) => setContrasena(e.target.value)}
                 />
 
@@ -140,8 +156,8 @@ export const User = () => {
                     {/* <label className='form-label'>Estado</label> */}
                     <select
                         id='inputEstadoUsuario'
-                        className='form-select'
                         required
+                        className='form-select'
                         onChange={(e) => setTipoUsuario(e.target.value)}
                     >
                         {tipoUsuario === '' ? (
@@ -199,8 +215,8 @@ export const User = () => {
                     {/* <label className='form-label'>Estado</label> */}
                     <select
                         id='inputEstadoUsuario'
-                        className='form-select'
                         required
+                        className='form-select'
                         onChange={(e) => setEstado(e.target.value)}
                     >
                         {estado === '' ? (
@@ -254,8 +270,14 @@ export const User = () => {
                     </select>
                 </div>
 
+                {
+                    (editar ?
+                        (<button className="btn btn-outline-success">Guardar Cambio</button>)
+                        :
+                        (<button className="btn btn-outline-success">Crear usuario</button>)
+                    )
+                }
 
-                <button className="btn btn-outline-success">Almacenar cambios</button>
 
             </form>
 
@@ -282,19 +304,21 @@ export const User = () => {
                                 {/* <tr key={item.id}> */}
                                 <th scope='row'>{i + 1}</th>
                                 {/* <td>{item.id}</td> */}
-                                <th>{i + 1}</th>
+                                <th>{item.id}</th>
                                 <td>{item.usuario}</td>
                                 <td>{item.correo}</td>
                                 <td>{item.cedula}</td>
                                 <td>{item.tipoUsuario}</td>
                                 <td>{item.estado}</td>
                                 <td>
+
                                     <button
                                         className="btn btn-outline-primary btn-sm"
-                                        onClick={() => handleModificar(item)}
+                                        onClick={() => handleEditar(item)}
                                     >
                                         Editar
                                     </button>
+
                                 </td>
                             </tr>
                         ))}
