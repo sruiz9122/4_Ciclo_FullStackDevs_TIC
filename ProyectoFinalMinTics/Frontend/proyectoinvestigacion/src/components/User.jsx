@@ -73,23 +73,19 @@ export const User = () => {
         console.log(`Se modificaron los datos`)
 
         const arregloTemporal = listaModificacion.map((item) => {
-            return item.id  === id ? { id:id, usuario:usuario, correo:correo, cedula:cedula, contrasena:contrasena, tipoUsuario:tipoUsuario, estado:estado} : item
+            return item.id === id ? 
+            { 
+                id:id, usuario:usuario, 
+                correo:correo, 
+                cedula:cedula, 
+                contrasena:contrasena, 
+                tipoUsuario:tipoUsuario, 
+                estado:estado
+            } 
+                : item
         })
 
-        setListaModificacion([
-            //Accedemos al valor actual del estado
-            ...listaModificacion,
-            //Asignación de un nuevo elemeto
-            {
-                id: uuidv4(),
-                usuario: usuario,
-                correo: correo,
-                cedula: cedula,
-                contrasena: contrasena,
-                tipoUsuario: tipoUsuario,
-                estado: estado
-            }
-        ])
+        setListaModificacion(arregloTemporal)
 
 
         //Limpieza del estado
