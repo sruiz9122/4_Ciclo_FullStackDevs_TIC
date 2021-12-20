@@ -1,9 +1,9 @@
 import React from 'react'
-import '../styles/App.css'
 import { v4 as uuidv4 } from 'uuid';
+import '../../styles/bootstrap.css'
 
 
-export const User = () => {
+export const RegistroUsuario = () => {
 
     const [usuario, setUsuario] = React.useState('')
     const [correo, setCorreo] = React.useState('')
@@ -323,3 +323,5 @@ export const User = () => {
         </div>
     )
 }
+
+export default RegistroUsuario;
