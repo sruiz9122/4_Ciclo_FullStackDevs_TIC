@@ -1,6 +1,22 @@
 import React from 'react'
 import { v4 as uuidv4 } from 'uuid';
-import '../../styles/bootstrap.css'
+import '../../styles/bootstrap.css';
+import { useQuery, gql, useMutation } from '@apollo/client';
+import { Fragment } from 'react/cjs/react.production.min';
+
+const USERS = gql`
+  query AllUsers {
+    Users{
+        _id
+        nombre
+        correo
+        numeroDocumento
+        tipoUsuario
+        estado
+      }
+  }
+`;
+
 
 
 export const RegistroUsuario = () => {
@@ -16,6 +32,7 @@ export const RegistroUsuario = () => {
     const [editar, setEditar] = React.useState(false)
     const [id, setId] = React.useState('')
     const [listaModificacion, setListaModificacion] = React.useState([])
+
 
     const guardarDatos = function (e) {
         //Evito el comportamiento por defecto del navegador
@@ -73,15 +90,15 @@ export const RegistroUsuario = () => {
         console.log(`Se modificaron los datos`)
 
         const arregloTemporal = listaModificacion.map((item) => {
-            return item.id === id ? 
-            { 
-                id:id, usuario:usuario, 
-                correo:correo, 
-                cedula:cedula, 
-                contrasena:contrasena, 
-                tipoUsuario:tipoUsuario, 
-                estado:estado
-            } 
+            return item.id === id ?
+                {
+                    id: id, usuario: usuario,
+                    correo: correo,
+                    cedula: cedula,
+                    contrasena: contrasena,
+                    tipoUsuario: tipoUsuario,
+                    estado: estado
+                }
                 : item
         })
 
@@ -99,18 +116,17 @@ export const RegistroUsuario = () => {
         e.target.reset()
     }
 
-    
 
 
     return (
         <div>
             {
-                editar ? 
-                (<h2>Editar Usuario</h2>) 
-                :
-                (<h2>Agregar Usuario</h2>)
+                editar ?
+                    (<h2>Editar Usuario</h2>)
+                    :
+                    (<h2>Agregar Usuario</h2>)
             }
-            
+
             <hr />
             {/* {usuario} */}
             <form onSubmit={editar ? editarDatos : guardarDatos}>
@@ -325,3 +341,4 @@ export const RegistroUsuario = () => {
 }
 
 export default RegistroUsuario;
+

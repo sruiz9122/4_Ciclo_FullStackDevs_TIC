@@ -2,6 +2,7 @@ const  express  = require ('express');
 const { graphqlHTTP }  = require ("express-graphql");
 const userShema = require("./shemas/userShema");
 const proyectShema = require("./shemas/projectShema");
+var cors = require('cors')
 
 require('./database');
 
@@ -18,3 +19,4 @@ app.use('/Project',graphqlHTTP({
 }));
 
 app.listen(3000, () => console.log("Server in port 3000"))
+app.use(cors())
