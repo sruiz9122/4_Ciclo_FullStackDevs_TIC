@@ -5,10 +5,9 @@ import 'styles/bootstrap.css'
 export const Login = () => {
     return (
         <div className='flex flex-col w-full justify-center items-center'>
-            <h2 className='m-5 text-center text-3xl font-extrabold text-gray-900'>Inicia Sesión</h2>
+            <h2 className='m-2 text-center text-3xl font-extrabold text-gray-900'>Inicia Sesión</h2>
             <hr />
-            <form className='mt-8 max-w-md'>
-
+            <form className='mt-3 max-w-md'>
                 <div>
                     {/* <label>Usuario: </label> */}
                     <input
@@ -27,7 +26,7 @@ export const Login = () => {
                     />
                 </div>
 
-                <div className='flex justify-between'>
+                <div className='flex m-2 justify-between text-1xl'>
                     <div>
                         <label htmlFor='recuerdame'>
                             <input type='checkbox' name='recuerdame' />
